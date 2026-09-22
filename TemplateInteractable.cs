@@ -8,6 +8,7 @@ public class TemplateInteractable : MonoBehaviour
 
     [Header("Interaction Events")]
     public UnityEvent onInteract;
+    public UnityEvent onExit;
 
     public void Activate()
     {
@@ -18,8 +19,15 @@ public class TemplateInteractable : MonoBehaviour
     {
         if (triggerOnEnter && collision.GetComponent<TemplatePlayerMovement>() != null)
         {
-            Debug.Log("Object activated on enter!");
             onInteract.Invoke();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponent<TemplatePlayerMovement>() != null)
+        {
+            onExit.Invoke();
         }
     }
 }
