@@ -1,8 +1,4 @@
-# Hybride Werelden - Arduino & Unity Template
-
-Welkom bij het basisproject voor de minor Hybride Werelden! Met deze template koppel je zonder te programmeren fysieke knoppen, sensoren en motoren (via een Arduino) aan je digitale Unity game.
-
-Dit project bevat een "Zwitsers Zakmes" script waarmee alles via handige menu's in de Unity Inspector werkt.
+# Arduino & Unity Template
 
 ## 1. Eerste keer instellen (Unity)
 
@@ -15,7 +11,7 @@ Voordat je begint, moet Unity toestemming hebben om via USB te communiceren.
 
 ## 2. Hardware Aansluiten (Arduino)
 
-Upload de meegeleverde code via de Arduino IDE naar je Arduino Uno. Sluit de componenten aan zoals op de onderstaande foto's. Zorg ervoor dat je de bijbehorende afbeeldingen in de map `assets` plaatst op GitHub.
+Upload de meegeleverde code via de Arduino IDE naar je Arduino Uno. Sluit de componenten aan zoals op de onderstaande foto's. Zorg ervoor dat je de bestanden `1.png` tot en met `6.png` in de map `assets` plaatst op GitHub.
 
 ### Outputs (Unity bestuurt de echte wereld)
 
@@ -26,10 +22,10 @@ Unity kan commando's sturen naar de Arduino om dingen te laten bewegen of geluid
 * **Pin 10 & 11:** 360-graden (Continuous) Servo's
 
 **Pin 9: 180-graden Servo**
-![180-graden Servo](assets/Screenshot%202026-10-16%20at%2010.13.09.png)
+![180 graden Servo](assets/1.png)
 
 **Pin 13: LED Lampje**
-![LED Lampje](assets/Screenshot%202026-10-16%20at%2010.12.56.jpg)
+![LED Lampje](assets/2.png)
 
 ### Inputs (De echte wereld bestuurt Unity)
 
@@ -40,21 +36,21 @@ Fysieke knoppen en sensoren sturen automatisch data naar Unity.
 Voor sensoren zoals Microswitches, knoppen of infrarood-poortjes.
 
 **Pin 2: Microswitch**
-![Microswitch](assets/Screenshot%202026-10-16%20at%2010.12.22.png)
+![Microswitch](assets/3.png)
 
 **Pin 4: Infrarood Sensor**
-![Infrarood Sensor](assets/Screenshot%202026-10-16%20at%2010.12.34.png)
+![Infrarood Sensor](assets/4.png)
 
 #### Analoge Inputs (Glijdende waardes)
 
 Voor sensoren met waardes van 0 tot 1023.
 
 **Pin A0: Potmeter (Draaiknop)**
-![Potmeter](assets/Screenshot%202026-10-16%20at%2010.11.56.png)
+![Potmeter](assets/5.png)
 
-**Pin A1: LDR (Lichtsensor)** 
+**Pin A1: LDR (Lichtsensor)**
+![LDR Lichtsensor](assets/6.png)
 *(Let op: op de foto aangesloten op A0, maar in ons script standaard op A0 of A1 te gebruiken)*
-![LDR Lichtsensor](assets/Screenshot%202026-10-16%20at%2010.12.47.png)
 
 ## 3. Werken in Unity (No-Code!)
 
