@@ -80,5 +80,5 @@ void loop() {
   int curAna1 = analogRead(ana1Pin);
   if (abs(curAna1 - lastAna1) > 10) { Serial.print("ANA1:"); Serial.println(curAna1); lastAna1 = curAna1; }
 
-  delay(10); 
+  delay(40); 
 }

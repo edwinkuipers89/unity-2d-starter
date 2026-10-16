@@ -26,8 +26,10 @@ public class TemplateArduinoAutoWriter : MonoBehaviour
     [Header("Digitale Input 3 (Pin 4)")]
     public UnityEvent onDigital3Aan;
     public UnityEvent onDigital3Uit;
-    
+
     [Header("Analoge Input 0 (Pin A0)")]
+    [Tooltip("Vink dit aan om de inkomende waarde van A0 te printen in de console.")]
+    public bool printDebugA0 = false;
     [Tooltip("Kies hier het omslagpunt (0-1023). Standaard is 512 (precies het midden).")]
     public int analog0Drempelwaarde = 512;
     [Tooltip("Triggert eenmalig zodra de sensorwaarde BOVEN de drempelwaarde komt.")]
@@ -38,6 +40,8 @@ public class TemplateArduinoAutoWriter : MonoBehaviour
     public IntEvent onAnalog0Changed;
 
     [Header("Analoge Input 1 (Pin A1)")]
+    [Tooltip("Vink dit aan om de inkomende waarde van A1 te printen in de console.")]
+    public bool printDebugA1 = false;
     [Tooltip("Kies hier het omslagpunt (0-1023). Standaard is 512 (precies het midden).")]
     public int analog1Drempelwaarde = 512;
     [Tooltip("Triggert eenmalig zodra de sensorwaarde BOVEN de drempelwaarde komt.")]
@@ -49,7 +53,6 @@ public class TemplateArduinoAutoWriter : MonoBehaviour
 
     private SerialPort serialPort;
     
-    // Geheugen om te onthouden waar de sensoren de vorige keer waren
     private bool analog0WasBoven = false;
     private bool analog1WasBoven = false;
 
@@ -107,7 +110,6 @@ public class TemplateArduinoAutoWriter : MonoBehaviour
 
     void ParseArduinoMessage(string message)
     {
-        // Digitale inputs (Aan/Uit)
         if (message.StartsWith("DIG1:")) {
             if (message.Substring(5) == "1") onDigital1Aan.Invoke(); else onDigital1Uit.Invoke();
         }
@@ -117,13 +119,13 @@ public class TemplateArduinoAutoWriter : MonoBehaviour
         else if (message.StartsWith("DIG3:")) {
             if (message.Substring(5) == "1") onDigital3Aan.Invoke(); else onDigital3Uit.Invoke();
         }
-        // Analoge input 0 (A0)
         else if (message.StartsWith("ANA0:")) {
             if (int.TryParse(message.Substring(5), out int val)) 
             {
-                onAnalog0Changed.Invoke(val); // Altijd het ruwe getal doorsturen
+                if (printDebugA0) Debug.Log("Analoge Sensor 0 (A0): " + val);
+
+                onAnalog0Changed.Invoke(val); 
                 
-                // Checken we of we de grens overschrijden
                 bool isNuBoven = val >= analog0Drempelwaarde;
                 if (isNuBoven && !analog0WasBoven) {
                     onAnalog0BovenDrempel.Invoke();
@@ -134,13 +136,13 @@ public class TemplateArduinoAutoWriter : MonoBehaviour
                 }
             }
         }
-        // Analoge input 1 (A1)
         else if (message.StartsWith("ANA1:")) {
             if (int.TryParse(message.Substring(5), out int val)) 
             {
-                onAnalog1Changed.Invoke(val); // Altijd het ruwe getal doorsturen
+                if (printDebugA1) Debug.Log("Analoge Sensor 1 (A1): " + val);
+
+                onAnalog1Changed.Invoke(val); 
                 
-                // Checken we of we de grens overschrijden
                 bool isNuBoven = val >= analog1Drempelwaarde;
                 if (isNuBoven && !analog1WasBoven) {
                     onAnalog1BovenDrempel.Invoke();
@@ -166,11 +168,10 @@ public class TemplateArduinoAutoWriter : MonoBehaviour
     void OnApplicationQuit()
     {
         if (serialPort != null && serialPort.IsOpen) {
-            // Veiligheidsmaatregel: zet alles uit als het spel stopt
-            serialPort.Write("m"); // Motor uit
-            serialPort.Write("b"); // Buzzer uit
-            serialPort.Write("S"); // Continuous servo stop
-            serialPort.Write("l"); // LED uit
+            serialPort.Write("m"); 
+            serialPort.Write("b"); 
+            serialPort.Write("S"); 
+            serialPort.Write("l"); 
             serialPort.Close();
         }
     }
